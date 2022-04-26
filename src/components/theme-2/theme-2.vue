@@ -1,5 +1,6 @@
 <template>
 		<div>
+				<button @click="addTodo">addTodo</button>
 				<h2>{{ taskListStatus }}</h2>
 				<ul>
 						<li
@@ -30,6 +31,8 @@
 
 <script>
 
+import { mapActions, mapState } from 'vuex';
+
 export default {
 		name: 'Theme2',
 		data() {
@@ -46,6 +49,9 @@ export default {
 				}
 		},
 		computed: {
+				...mapState({
+						count: 'count'
+				}),
 				taskListStatus() {
 						return this.todoList.length
 								? 'У тебя много задач, парень'
@@ -63,11 +69,21 @@ export default {
 				}
 		},
 		methods: {
+				...mapActions({
+						storeAddTodo: 'addTodo'
+				}),
 				deleteTask(taskId) {
 						this.todoList.splice(taskId, 1);
 				},
 				warningTask() {
 						alert('ОГОГО парень, палегще')
+				},
+				addTodo() {
+						this.storeAddTodo({
+								id: this.count,
+								name: 'fehuefewfewff',
+								status: 'new'
+						})
 				}
 		}
 }
